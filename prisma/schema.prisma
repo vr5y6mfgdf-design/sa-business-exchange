@@ -125,6 +125,18 @@ model FaultReport {
   
   agreement     Agreement @relation(fields: [agreementId], references: [id], onDelete: Cascade)
   reporter      Business @relation(fields: [reportedBy], references: [id], onDelete: Cascade)
+  images        FaultReportImage[]
 
   @@map("fault_reports")
+}
+
+model FaultReportImage {
+  id             String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  faultReportId  String   @db.Uuid
+  imageUrl       String
+  createdAt      DateTime @default(now())
+  
+  faultReport    FaultReport @relation(fields: [faultReportId], references: [id], onDelete: Cascade)
+
+  @@map("fault_report_images")
 }
