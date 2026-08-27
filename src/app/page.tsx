@@ -1,75 +1,75 @@
-'use client'
-
-import Link from 'next/link'
-
 export default function Home() {
   return (
-    <main className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
-      <nav className="bg-white shadow">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-blue-600">
-                SA Business Exchange
-              </h1>
-            </div>
-            <div className="flex items-center gap-4">
-              <Link href="/businesses" className="text-gray-600 hover:text-gray-900">
-                Businesses
-              </Link>
-              <Link href="/listings" className="text-gray-600 hover:text-gray-900">
-                Listings
-              </Link>
-              <Link 
-                href="/register" 
-                className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
-              >
-                Register
-              </Link>
+    <main className="min-h-screen bg-gradient-to-b from-blue-50 to-indigo-100">
+      {/* Navigation */}
+      <nav className="bg-white shadow-md">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+          <div className="flex justify-between items-center">
+            <div className="text-2xl font-bold text-indigo-600">SA Business Exchange</div>
+            <div className="space-x-4">
+              <a href="/marketplace" className="text-gray-700 hover:text-indigo-600">Marketplace</a>
+              <a href="/register" className="text-gray-700 hover:text-indigo-600">Register</a>
+              <a href="/login" className="bg-indigo-600 text-white px-4 py-2 rounded-lg hover:bg-indigo-700">Login</a>
             </div>
           </div>
         </div>
       </nav>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      {/* Hero Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center">
-          <h2 className="text-4xl font-bold text-gray-900 mb-4">
-            Welcome to SA Business Exchange
-          </h2>
-          <p className="text-xl text-gray-600 mb-8">
-            Connect, trade, and grow with South African businesses
-          </p>
-          <div className="flex gap-4 justify-center">
-            <Link 
-              href="/businesses" 
-              className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700"
-            >
-              Browse Businesses
-            </Link>
-            <Link 
-              href="/listings" 
-              className="bg-gray-200 text-gray-900 px-6 py-3 rounded-lg hover:bg-gray-300"
-            >
-              View Listings
-            </Link>
+          <h1 className="text-5xl font-bold text-gray-900 mb-4">Connect. Trade. Grow.</h1>
+          <p className="text-xl text-gray-600 mb-8">The premier platform for South African businesses to exchange services and assets</p>
+          <div className="space-x-4">
+            <a href="/marketplace" className="bg-indigo-600 text-white px-8 py-3 rounded-lg hover:bg-indigo-700 inline-block">Browse Listings</a>
+            <a href="/register" className="bg-white text-indigo-600 px-8 py-3 rounded-lg border-2 border-indigo-600 hover:bg-indigo-50 inline-block">Get Started</a>
           </div>
         </div>
+      </section>
 
-        <div className="grid grid-cols-3 gap-8 mt-16">
-          <div className="bg-white p-6 rounded-lg shadow">
-            <div className="text-3xl font-bold text-blue-600 mb-2">500+</div>
-            <p className="text-gray-600">Registered Businesses</p>
-          </div>
-          <div className="bg-white p-6 rounded-lg shadow">
-            <div className="text-3xl font-bold text-blue-600 mb-2">1000+</div>
-            <p className="text-gray-600">Active Listings</p>
-          </div>
-          <div className="bg-white p-6 rounded-lg shadow">
-            <div className="text-3xl font-bold text-blue-600 mb-2">50K+</div>
-            <p className="text-gray-600">Successful Transactions</p>
+      {/* Features Section */}
+      <section className="bg-white py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <h2 className="text-3xl font-bold text-center mb-12">Why Choose SA Business Exchange?</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="text-center">
+              <div className="text-4xl mb-4">🏢</div>
+              <h3 className="text-xl font-bold mb-2">Business Directory</h3>
+              <p className="text-gray-600">Browse thousands of verified South African businesses</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl mb-4">📋</div>
+              <h3 className="text-xl font-bold mb-2">Asset Listings</h3>
+              <p className="text-gray-600">List equipment and services for rent or sale</p>
+            </div>
+            <div className="text-center">
+              <div className="text-4xl mb-4">⭐</div>
+              <h3 className="text-xl font-bold mb-2">Trust & Safety</h3>
+              <p className="text-gray-600">Verified businesses with trust scores and reviews</p>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="bg-indigo-600 text-white py-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold mb-4">Ready to grow your business?</h2>
+          <a href="/register" className="bg-white text-indigo-600 px-8 py-3 rounded-lg hover:bg-gray-100 inline-block font-bold">Register Your Business Today</a>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="bg-gray-800 text-gray-300 py-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <p>&copy; 2024 SA Business Exchange. All rights reserved.</p>
+          <div className="mt-4 space-x-4">
+            <a href="#" className="hover:text-white">Privacy Policy</a>
+            <a href="#" className="hover:text-white">Terms of Service</a>
+            <a href="/contact" className="hover:text-white">Contact Us</a>
+          </div>
+        </div>
+      </footer>
     </main>
   )
 }

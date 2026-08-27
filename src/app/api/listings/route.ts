@@ -4,15 +4,17 @@ import { prisma } from '@/lib/prisma'
 export async function GET(request: NextRequest) {
   try {
     const searchParams = request.nextUrl.searchParams
-    const page = parseInt(searchParams.get('page') || '1')
-    const limit = parseInt(searchParams.get('limit') || '10')
     const category = searchParams.get('category')
     const province = searchParams.get('province')
+    const city = searchParams.get('city')
+    const page = parseInt(searchParams.get('page') || '1')
+    const limit = parseInt(searchParams.get('limit') || '10')
     const skip = (page - 1) * limit
 
-    const where: any = {}
+    const where: any = { status: 'active' }
     if (category) where.category = category
     if (province) where.province = province
+    if (city) where.city = city
 
     const listings = await prisma.listing.findMany({
       where,
@@ -21,6 +23,7 @@ export async function GET(request: NextRequest) {
       include: {
         business: true,
       },
+      orderBy: { createdAt: 'desc' },
     })
 
     const total = await prisma.listing.count({ where })
@@ -62,6 +65,9 @@ export async function POST(request: NextRequest) {
         monthlyRate: body.monthlyRate,
         salePrice: body.salePrice,
         status: body.status || 'active',
+      },
+      include: {
+        business: true,
       },
     })
 
