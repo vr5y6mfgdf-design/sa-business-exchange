@@ -95,6 +95,19 @@ model Agreement {
   listing         Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
   owner           Business @relation("OwnerAgreements", fields: [ownerId], references: [id], onDelete: Cascade)
   renter          Business @relation("RenterAgreements", fields: [renterId], references: [id], onDelete: Cascade)
+  documents       Document[]
 
   @@map("agreements")
+}
+
+model Document {
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  agreementId   String   @db.Uuid
+  documentType  String   @db.VarChar(100)
+  fileUrl       String
+  createdAt     DateTime @default(now())
+  
+  agreement     Agreement @relation(fields: [agreementId], references: [id], onDelete: Cascade)
+
+  @@map("documents")
 }
