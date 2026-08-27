@@ -1,0 +1,56 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Business {
+  id                  String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  businessCode        String   @unique @db.VarChar(30)
+  companyName         String   @db.VarChar(255)
+  registrationNumber  String?  @db.VarChar(100)
+  industry            String?  @db.VarChar(100)
+  province            String?  @db.VarChar(100)
+  city                String?  @db.VarChar(100)
+  contactFirstName    String?  @db.VarChar(100)
+  contactLastName     String?  @db.VarChar(100)
+  email               String   @unique @db.VarChar(255)
+  phone               String?  @db.VarChar(50)
+  logoUrl             String?
+  description         String?
+  verificationStatus  String   @default("pending") @db.VarChar(50)
+  trustScore          Int      @default(0)
+  createdAt           DateTime @default(now())
+  
+  listings            Listing[]
+
+  @@map("businesses")
+}
+
+model Listing {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  businessId  String   @db.Uuid
+  assetCode   String   @unique @db.VarChar(30)
+  title       String?  @db.VarChar(255)
+  description String?
+  category    String?  @db.VarChar(100)
+  listingType String?  @db.VarChar(50)
+  province    String?  @db.VarChar(100)
+  city        String?  @db.VarChar(100)
+  dailyRate   Decimal? @db.Numeric
+  weeklyRate  Decimal? @db.Numeric
+  monthlyRate Decimal? @db.Numeric
+  salePrice   Decimal? @db.Numeric
+  status      String   @default("active") @db.VarChar(50)
+  createdAt   DateTime @default(now())
+  
+  business    Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+
+  @@map("listings")
+}
