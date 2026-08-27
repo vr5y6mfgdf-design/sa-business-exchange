@@ -33,6 +33,7 @@ model Business {
   rentalRequestsRequester RentalRequest[] @relation("RequesterRequests")
   agreementsOwner     Agreement[] @relation("OwnerAgreements")
   agreementsRenter    Agreement[] @relation("RenterAgreements")
+  faultReports        FaultReport[]
 
   @@map("businesses")
 }
@@ -96,6 +97,7 @@ model Agreement {
   owner           Business @relation("OwnerAgreements", fields: [ownerId], references: [id], onDelete: Cascade)
   renter          Business @relation("RenterAgreements", fields: [renterId], references: [id], onDelete: Cascade)
   documents       Document[]
+  faultReports    FaultReport[]
 
   @@map("agreements")
 }
@@ -110,4 +112,19 @@ model Document {
   agreement     Agreement @relation(fields: [agreementId], references: [id], onDelete: Cascade)
 
   @@map("documents")
+}
+
+model FaultReport {
+  id            String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  agreementId   String   @db.Uuid
+  reportedBy    String   @db.Uuid
+  issueType     String   @db.VarChar(100)
+  description   String?
+  status        String   @default("open") @db.VarChar(50)
+  createdAt     DateTime @default(now())
+  
+  agreement     Agreement @relation(fields: [agreementId], references: [id], onDelete: Cascade)
+  reporter      Business @relation(fields: [reportedBy], references: [id], onDelete: Cascade)
+
+  @@map("fault_reports")
 }
