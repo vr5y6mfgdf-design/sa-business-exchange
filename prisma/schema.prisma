@@ -29,6 +29,10 @@ model Business {
   createdAt           DateTime @default(now())
   
   listings            Listing[]
+  rentalRequestsOwner RentalRequest[] @relation("OwnerRequests")
+  rentalRequestsRequester RentalRequest[] @relation("RequesterRequests")
+  agreementsOwner     Agreement[] @relation("OwnerAgreements")
+  agreementsRenter    Agreement[] @relation("RenterAgreements")
 
   @@map("businesses")
 }
@@ -50,7 +54,47 @@ model Listing {
   status      String   @default("active") @db.VarChar(50)
   createdAt   DateTime @default(now())
   
-  business    Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  business        Business @relation(fields: [businessId], references: [id], onDelete: Cascade)
+  rentalRequests  RentalRequest[]
+  agreements      Agreement[]
 
   @@map("listings")
+}
+
+model RentalRequest {
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  listingId   String   @db.Uuid
+  ownerId     String   @db.Uuid
+  requesterId String   @db.Uuid
+  startDate   DateTime @db.Date
+  endDate     DateTime @db.Date
+  message     String?
+  status      String   @default("pending") @db.VarChar(50)
+  createdAt   DateTime @default(now())
+  
+  listing     Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  owner       Business @relation("OwnerRequests", fields: [ownerId], references: [id], onDelete: Cascade)
+  requester   Business @relation("RequesterRequests", fields: [requesterId], references: [id], onDelete: Cascade)
+
+  @@map("rental_requests")
+}
+
+model Agreement {
+  id              String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  agreementCode   String   @unique @db.VarChar(50)
+  listingId       String   @db.Uuid
+  ownerId         String   @db.Uuid
+  renterId        String   @db.Uuid
+  startDate       DateTime @db.Date
+  endDate         DateTime @db.Date
+  rentalFee       Decimal  @db.Numeric
+  deposit         Decimal  @db.Numeric
+  status          String   @db.VarChar(50)
+  createdAt       DateTime @default(now())
+  
+  listing         Listing @relation(fields: [listingId], references: [id], onDelete: Cascade)
+  owner           Business @relation("OwnerAgreements", fields: [ownerId], references: [id], onDelete: Cascade)
+  renter          Business @relation("RenterAgreements", fields: [renterId], references: [id], onDelete: Cascade)
+
+  @@map("agreements")
 }
